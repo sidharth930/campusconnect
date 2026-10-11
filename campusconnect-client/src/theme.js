@@ -82,31 +82,32 @@ export const themeSettings = (mode) => ({
     success: { main: "#10B981" },
     info: { main: "#06B6D4" },
     background: {
-      default: mode === "light" ? "#F8FAFC" : "#060911",
-      paper: mode === "light" ? "#FFFFFF" : "#0E1424",
+      default: mode === "light" ? "#F8FAFC" : "#090D16",
+      paper: mode === "light" ? "#FFFFFF" : "#111622",
     },
     text: {
       primary: mode === "light" ? "#0F172A" : "#F8FAFC",
-      secondary: mode === "light" ? "#475569" : "#94A3B8",
+      secondary: mode === "light" ? "#64748B" : "#94A3B8",
     },
     action: {
       hover: mode === "light" ? "rgba(15, 23, 42, 0.04)" : "rgba(255, 255, 255, 0.05)",
-      selected: mode === "light" ? "rgba(99, 102, 241, 0.08)" : "rgba(99, 102, 241, 0.15)",
+      selected: mode === "light" ? "rgba(99, 102, 241, 0.08)" : "rgba(99, 102, 241, 0.16)",
     },
-    divider: mode === "light" ? "#E2E8F0" : "rgba(255, 255, 255, 0.08)",
+    divider: mode === "light" ? "rgba(226, 232, 240, 0.85)" : "rgba(255, 255, 255, 0.07)",
   },
   typography: {
     fontFamily: "'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
-    h1: { fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, letterSpacing: "-0.03em" },
-    h2: { fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, letterSpacing: "-0.025em" },
-    h3: { fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, letterSpacing: "-0.02em" },
+    h1: { fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, letterSpacing: "-0.035em" },
+    h2: { fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, letterSpacing: "-0.03em" },
+    h3: { fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, letterSpacing: "-0.025em" },
     h4: { fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, letterSpacing: "-0.02em" },
     h5: { fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, letterSpacing: "-0.015em" },
     h6: { fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, letterSpacing: "-0.015em" },
-    subtitle1: { fontWeight: 600, letterSpacing: "-0.01em" },
+    subtitle1: { fontWeight: 600, letterSpacing: "-0.012em" },
     subtitle2: { fontWeight: 600, letterSpacing: "-0.01em" },
-    body1: { letterSpacing: "-0.011em", lineHeight: 1.6 },
+    body1: { letterSpacing: "-0.012em", lineHeight: 1.65 },
     body2: { letterSpacing: "-0.01em", lineHeight: 1.55 },
+    caption: { letterSpacing: "0.01em" },
     button: { fontWeight: 600, textTransform: "none", letterSpacing: "-0.01em" },
   },
   shape: { borderRadius: 16 },
@@ -114,21 +115,24 @@ export const themeSettings = (mode) => ({
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: 12,
+          borderRadius: 10,
           paddingTop: 8,
           paddingBottom: 8,
           boxShadow: "none",
           fontWeight: 600,
-          transition: "all 180ms ease-in-out",
+          transition: "all 160ms cubic-bezier(0.4, 0, 0.2, 1)",
+          "&:active": {
+            transform: "scale(0.98)",
+          },
         },
         contained: {
           boxShadow: mode === "light"
-            ? "0 4px 14px -3px rgba(79, 70, 229, 0.35)"
-            : "0 4px 18px -3px rgba(99, 102, 241, 0.5)",
+            ? "0 2px 8px -2px rgba(79, 70, 229, 0.4)"
+            : "0 2px 10px -2px rgba(99, 102, 241, 0.5)",
           "&:hover": {
             boxShadow: mode === "light"
-              ? "0 6px 20px -3px rgba(79, 70, 229, 0.45)"
-              : "0 6px 24px -3px rgba(99, 102, 241, 0.65)",
+              ? "0 4px 14px -2px rgba(79, 70, 229, 0.45)"
+              : "0 4px 18px -2px rgba(99, 102, 241, 0.65)",
             transform: "translateY(-1px)",
           },
         },
@@ -139,8 +143,8 @@ export const themeSettings = (mode) => ({
         root: {
           backgroundImage: "none",
           boxShadow: mode === "light"
-            ? "0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 4px 16px -4px rgba(0, 0, 0, 0.06)"
-            : "0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 8px 24px -8px rgba(0, 0, 0, 0.6)",
+            ? "0 1px 3px 0 rgba(0, 0, 0, 0.02), 0 4px 16px -2px rgba(15, 23, 42, 0.05)"
+            : "0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 8px 24px -6px rgba(0, 0, 0, 0.55), inset 0 1px 0 0 rgba(255, 255, 255, 0.04)",
         },
       },
     },
@@ -148,8 +152,8 @@ export const themeSettings = (mode) => ({
       styleOverrides: {
         root: {
           fontWeight: 600,
-          borderRadius: 10,
-          transition: "all 160ms ease",
+          borderRadius: 8,
+          transition: "all 140ms ease",
         },
       },
     },
@@ -159,8 +163,8 @@ export const themeSettings = (mode) => ({
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
-          borderRadius: 12,
-          transition: "border-color 160ms ease, box-shadow 160ms ease",
+          borderRadius: 10,
+          transition: "border-color 140ms ease, box-shadow 140ms ease",
         },
       },
     },

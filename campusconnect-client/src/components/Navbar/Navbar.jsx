@@ -74,45 +74,80 @@ export default function Navbar() {
 
   return (
     <Box
-      display="flex" alignItems="center" justifyContent="space-between" px={{ xs: 2, md: 4 }} py={1.5}
-      bgcolor={mode === "light" ? "rgba(255, 255, 255, 0.88)" : "rgba(14, 20, 36, 0.88)"}
+      display="flex" alignItems="center" justifyContent="space-between" px={{ xs: 2, md: 4 }} py={1.2}
+      bgcolor={mode === "light" ? "rgba(255, 255, 255, 0.82)" : "rgba(11, 14, 22, 0.82)"}
       borderBottom="1px solid" borderColor="divider"
       position="sticky" top={0} zIndex={100}
       sx={{
-        backdropFilter: "blur(12px)",
-        WebkitBackdropFilter: "blur(12px)",
+        backdropFilter: "blur(16px)",
+        WebkitBackdropFilter: "blur(16px)",
         transform: "translateZ(0)",
       }}
     >
-      <Typography
-        variant="h6" fontWeight={800} sx={{
-          cursor: "pointer",
-          letterSpacing: "-0.03em",
-          background: "linear-gradient(135deg, #6366F1 0%, #06B6D4 100%)",
-          WebkitBackgroundClip: "text",
-          WebkitTextFillColor: "transparent",
-          userSelect: "none",
-        }}
+      <Box
+        display="flex"
+        alignItems="center"
+        gap={1}
+        sx={{ cursor: "pointer", userSelect: "none" }}
         onClick={() => navigate("/home")}
       >
-        CampusConnect
-      </Typography>
+        <Typography
+          variant="h6" fontWeight={800} sx={{
+            letterSpacing: "-0.03em",
+            fontSize: "1.18rem",
+            background: mode === "light"
+              ? "linear-gradient(135deg, #4338CA 0%, #0891B2 100%)"
+              : "linear-gradient(135deg, #818CF8 0%, #22D3EE 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+          }}
+        >
+          CampusConnect
+        </Typography>
+      </Box>
 
       <Box
         component="form"
         onSubmit={handleSearchClick}
         display={{ xs: "none", sm: "flex" }} alignItems="center" gap={1}
-        bgcolor={mode === "light" ? "#F1F5F9" : "rgba(255, 255, 255, 0.05)"}
+        bgcolor={mode === "light" ? "rgba(241, 245, 249, 0.7)" : "rgba(255, 255, 255, 0.04)"}
         border="1px solid" borderColor="divider"
-        borderRadius={3} pl={2} pr={0.7} py={0.4} width={{ sm: 260, md: 360 }}
-        sx={{ transition: "all 180ms ease", "&:focus-within": { borderColor: "primary.main", boxShadow: "0 0 0 3px rgba(99, 102, 241, 0.15)" } }}
+        borderRadius={2.5} pl={1.5} pr={1} py={0.4} width={{ sm: 260, md: 360 }}
+        sx={{
+          transition: "all 140ms ease",
+          "&:focus-within": {
+            borderColor: "primary.main",
+            boxShadow: "0 0 0 3px rgba(99, 102, 241, 0.12)",
+            bgcolor: mode === "light" ? "#fff" : "rgba(255, 255, 255, 0.06)",
+          },
+        }}
       >
-        <InputBase placeholder="Search thoughts, resources, doubts, peers…" fullWidth value={query} onChange={(e) => setQuery(e.target.value)} onKeyDown={handleSearchSubmit} sx={{ fontSize: "0.88rem" }} />
-        <Tooltip title="Search">
-          <IconButton size="small" type="submit" sx={{ color: "primary.main", "&:hover": { bgcolor: "primary.light" } }}>
-            <Search fontSize="small" />
-          </IconButton>
-        </Tooltip>
+        <Search sx={{ fontSize: 18, color: "text.secondary" }} />
+        <InputBase
+          placeholder="Search thoughts, doubts, peers…"
+          fullWidth
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={handleSearchSubmit}
+          sx={{ fontSize: "0.86rem", color: "text.primary" }}
+        />
+        <Box
+          component="kbd"
+          sx={{
+            px: 0.7,
+            py: 0.2,
+            fontSize: "0.68rem",
+            fontWeight: 700,
+            borderRadius: 1,
+            bgcolor: "action.hover",
+            border: "1px solid",
+            borderColor: "divider",
+            color: "text.secondary",
+            fontFamily: "monospace",
+          }}
+        >
+          /
+        </Box>
       </Box>
 
       <Box display="flex" alignItems="center" gap={1.5}>

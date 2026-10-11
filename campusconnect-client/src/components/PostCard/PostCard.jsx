@@ -118,88 +118,90 @@ export default function PostCard({ post }) {
     <Box
       bgcolor="background.paper"
       border={`1px solid ${theme.palette.divider}`}
-      borderRadius={3.5}
+      borderRadius={3}
       overflow="hidden"
       sx={{
         transform: "translateZ(0)",
         backfaceVisibility: "hidden",
-        transition: "transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease",
+        transition: "transform 180ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 180ms ease, border-color 180ms ease",
         position: "relative",
         "&:hover": {
-          transform: "translateY(-2px)",
-          borderColor: `${badgeColor}55`,
+          transform: "translateY(-1px)",
+          borderColor: theme.palette.mode === "light" ? "rgba(99, 102, 241, 0.3)" : "rgba(255, 255, 255, 0.14)",
           boxShadow:
             theme.palette.mode === "light"
-              ? "0 10px 24px -8px rgba(15, 23, 42, 0.1)"
-              : "0 12px 28px -8px rgba(0, 0, 0, 0.7)",
+              ? "0 8px 24px -4px rgba(15, 23, 42, 0.08)"
+              : "0 12px 32px -8px rgba(0, 0, 0, 0.7), inset 0 1px 0 0 rgba(255, 255, 255, 0.05)",
         },
       }}
     >
-      {/* Top subtle category accent line */}
-      <Box height={3} bgcolor={badgeColor} sx={{ opacity: 0.85 }} />
-
       <Box p={2.5}>
         {/* Header: Author Info & Post Category */}
-        <Box display="flex" justifyContent="space-between" alignItems="flex-start" gap={1.5}>
+        <Box display="flex" justifyContent="space-between" alignItems="center" gap={1.5}>
           <Box
             display="flex"
             gap={1.5}
             alignItems="center"
-            sx={{ cursor: hasAuthor ? "pointer" : "default" }}
+            sx={{ cursor: hasAuthor ? "pointer" : "default", minWidth: 0 }}
             onClick={() => hasAuthor && authorId && navigate(`/profile/${authorId}`)}
           >
             <ClickableAvatar
               user={authorUser}
-              size={44}
+              size={42}
               sx={{
                 border: `2px solid ${roleColor}`,
                 boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
               }}
             />
-            <Box>
-              <Box display="flex" alignItems="center" gap={0.8} flexWrap="wrap">
-                <Typography fontWeight={700} color="text.primary" sx={{ letterSpacing: "-0.015em" }}>
+            <Box minWidth={0}>
+              <Box display="flex" alignItems="center" gap={0.7} flexWrap="wrap">
+                <Typography fontWeight={700} color="text.primary" fontSize="0.95rem" sx={{ letterSpacing: "-0.018em", lineHeight: 1.25 }}>
                   {hasAuthor ? `${post.firstName} ${post.lastName}` : "Unknown author"}
                 </Typography>
                 <VerifiedBadge role={post.role} size="small" />
                 {post.role && (
-                  <Chip
-                    label={post.role}
-                    size="small"
+                  <Box
+                    component="span"
                     sx={{
-                      height: 20,
                       fontSize: "0.68rem",
                       fontWeight: 700,
-                      textTransform: "capitalize",
-                      bgcolor: `${roleColor}16`,
+                      textTransform: "uppercase",
+                      letterSpacing: "0.04em",
+                      px: 0.8,
+                      py: 0.2,
+                      borderRadius: 1,
+                      bgcolor: `${roleColor}14`,
                       color: roleColor,
-                      border: `1px solid ${roleColor}33`,
+                      border: `1px solid ${roleColor}28`,
                     }}
-                  />
+                  >
+                    {post.role}
+                  </Box>
                 )}
               </Box>
-              <Typography variant="caption" color="text.secondary">
+              <Typography variant="caption" color="text.secondary" fontSize="0.75rem" mt={0.2} display="block">
                 {formatDate(post.createdAt)}
               </Typography>
             </Box>
           </Box>
 
-          <Box display="flex" alignItems="center" gap={1}>
+          <Box display="flex" alignItems="center" gap={1} flexShrink={0}>
             {/* Category Pill */}
             {(() => {
               const TypeIcon = typeConfig.Icon;
               return (
                 <Chip
-                  icon={TypeIcon ? <TypeIcon sx={{ fontSize: "14px !important", color: `${badgeColor} !important` }} /> : undefined}
+                  icon={TypeIcon ? <TypeIcon sx={{ fontSize: "13px !important", color: `${badgeColor} !important` }} /> : undefined}
                   label={typeConfig.label}
                   size="small"
                   sx={{
-                    bgcolor: typeConfig.bg,
+                    bgcolor: `${badgeColor}12`,
                     color: badgeColor,
                     fontWeight: 700,
-                    fontSize: "0.75rem",
-                    height: 26,
-                    border: `1px solid ${typeConfig.border}`,
+                    fontSize: "0.72rem",
+                    height: 24,
+                    borderRadius: 1.5,
+                    border: `1px solid ${badgeColor}33`,
                     "& .MuiChip-icon": {
                       ml: "6px",
                       mr: "-2px",
@@ -217,14 +219,17 @@ export default function PostCard({ post }) {
                     onClick={handleConnect}
                     disabled={busy}
                     sx={{
-                      bgcolor: isConnected ? "rgba(244, 63, 94, 0.1)" : "rgba(99, 102, 241, 0.1)",
+                      width: 30,
+                      height: 30,
+                      bgcolor: isConnected ? "rgba(244, 63, 94, 0.1)" : "rgba(99, 102, 241, 0.08)",
                       color: isConnected ? "error.main" : "primary.main",
+                      border: `1px solid ${isConnected ? "rgba(244, 63, 94, 0.2)" : "rgba(99, 102, 241, 0.2)"}`,
                       "&:hover": {
-                        bgcolor: isConnected ? "rgba(244, 63, 94, 0.2)" : "rgba(99, 102, 241, 0.2)",
+                        bgcolor: isConnected ? "rgba(244, 63, 94, 0.2)" : "rgba(99, 102, 241, 0.16)",
                       },
                     }}
                   >
-                    {isConnected ? <PersonRemoveAlt1 fontSize="small" /> : <PersonAddAlt1 fontSize="small" />}
+                    {isConnected ? <PersonRemoveAlt1 sx={{ fontSize: 16 }} /> : <PersonAddAlt1 sx={{ fontSize: 16 }} />}
                   </IconButton>
                 </span>
               </Tooltip>
@@ -232,8 +237,8 @@ export default function PostCard({ post }) {
 
             {isMe && (
               <Tooltip title="Delete post">
-                <IconButton size="small" onClick={handleDelete} sx={{ color: "text.secondary" }}>
-                  <DeleteOutline fontSize="small" />
+                <IconButton size="small" onClick={handleDelete} sx={{ width: 30, height: 30, color: "text.secondary", "&:hover": { color: "error.main" } }}>
+                  <DeleteOutline sx={{ fontSize: 17 }} />
                 </IconButton>
               </Tooltip>
             )}
@@ -249,7 +254,7 @@ export default function PostCard({ post }) {
           sx={{
             whiteSpace: "pre-line",
             lineHeight: 1.68,
-            fontSize: "0.96rem",
+            fontSize: "0.95rem",
             letterSpacing: "-0.01em",
           }}
         >

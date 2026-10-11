@@ -119,32 +119,32 @@ export default function CampusAnnouncements() {
       bgcolor="background.paper"
       border="1px solid"
       borderColor="divider"
-      borderRadius={3.5}
+      borderRadius={3}
       p={2.5}
       sx={{
         boxShadow:
           theme.palette.mode === "light"
-            ? "0 4px 20px -6px rgba(15, 23, 42, 0.06)"
-            : "0 8px 28px -10px rgba(0, 0, 0, 0.7)",
+            ? "0 1px 3px 0 rgba(0, 0, 0, 0.02), 0 4px 16px -2px rgba(15, 23, 42, 0.05)"
+            : "0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 8px 24px -6px rgba(0, 0, 0, 0.55), inset 0 1px 0 0 rgba(255, 255, 255, 0.04)",
       }}
     >
       {/* ---------------- Header & Administrative Controls ---------------- */}
       <Box display="flex" alignItems="center" justifyContent="space-between" mb={1.8}>
         <Box display="flex" alignItems="center" gap={1.2}>
           <Box
-            width={36} height={36} borderRadius={2.5}
-            bgcolor="rgba(99, 102, 241, 0.12)" color="primary.main"
+            width={34} height={34} borderRadius={2}
+            bgcolor="rgba(99, 102, 241, 0.1)" color="primary.main"
             display="flex" alignItems="center" justifyContent="center"
-            sx={{ boxShadow: "0 2px 8px -2px rgba(99, 102, 241, 0.25)" }}
+            border="1px solid rgba(99, 102, 241, 0.2)"
           >
-            <CampaignOutlined fontSize="small" />
+            <CampaignOutlined sx={{ fontSize: 18 }} />
           </Box>
           <Box>
-            <Typography variant="subtitle2" fontWeight={800} fontSize="0.96rem" sx={{ letterSpacing: "-0.01em" }}>
-              Campus Announcements
+            <Typography variant="subtitle2" fontWeight={800} fontSize="0.94rem" sx={{ letterSpacing: "-0.01em" }}>
+              Announcements
             </Typography>
-            <Typography variant="caption" color="text.secondary">
-              Placement drives, circulars & events
+            <Typography variant="caption" color="text.secondary" fontSize="0.74rem">
+              Notices & placement drives
             </Typography>
           </Box>
         </Box>
@@ -156,27 +156,13 @@ export default function CampusAnnouncements() {
               variant="contained"
               size="small"
               onClick={() => setModalOpen(true)}
-              startIcon={<AddRounded sx={{ fontSize: "16px !important" }} />}
+              startIcon={<AddRounded sx={{ fontSize: "15px !important" }} />}
               sx={{
-                background: "linear-gradient(135deg, #F59E0B 0%, #D97706 100%)",
-                color: "#FFFFFF",
-                fontWeight: 700,
-                fontSize: "0.78rem",
-                letterSpacing: "-0.01em",
-                borderRadius: "20px",
-                textTransform: "none",
-                py: 0.6,
                 px: 1.8,
-                boxShadow: "0 3px 12px -2px rgba(245, 158, 11, 0.45)",
-                transition: "all 180ms cubic-bezier(0.4, 0, 0.2, 1)",
-                "&:hover": {
-                  background: "linear-gradient(135deg, #FBBF24 0%, #D97706 100%)",
-                  boxShadow: "0 6px 18px -3px rgba(245, 158, 11, 0.6)",
-                  transform: "translateY(-1.5px)",
-                },
-                "&:active": {
-                  transform: "translateY(0)",
-                },
+                py: 0.5,
+                borderRadius: 2,
+                fontSize: "0.78rem",
+                fontWeight: 700,
               }}
             >
               Post
@@ -189,45 +175,71 @@ export default function CampusAnnouncements() {
       {isAlumni && (
         <Box
           display="flex" alignItems="center" gap={0.8}
-          bgcolor="rgba(245, 158, 11, 0.1)"
-          border="1px solid rgba(245, 158, 11, 0.25)"
+          bgcolor="rgba(245, 158, 11, 0.08)"
+          border="1px solid rgba(245, 158, 11, 0.2)"
           borderRadius={2} p={1} mb={2}
         >
-          <AdminPanelSettings sx={{ color: "#F59E0B", fontSize: 18 }} />
-          <Typography variant="caption" fontWeight={600} color="#B45309">
-            You are logged in as an Alumni Administrator. You can post, update, and manage official notices.
+          <AdminPanelSettings sx={{ color: "#F59E0B", fontSize: 16 }} />
+          <Typography variant="caption" fontWeight={600} color="#D97706" fontSize="0.72rem">
+            Alumni Administrator Mode — Full notice management access
           </Typography>
         </Box>
       )}
 
-      {/* ---------------- Category Filter Chips ---------------- */}
-      <Stack direction="row" spacing={0.6} mb={2} sx={{ overflowX: "auto", pb: 0.5 }}>
+      {/* ---------------- Category Filter Tabs ---------------- */}
+      <Box
+        sx={{
+          display: "flex",
+          gap: 0.5,
+          p: 0.4,
+          bgcolor: theme.palette.mode === "light" ? "rgba(0,0,0,0.03)" : "rgba(255,255,255,0.03)",
+          borderRadius: 2,
+          border: `1px solid ${theme.palette.divider}`,
+          overflowX: "auto",
+          scrollbarWidth: "none",
+          mb: 2,
+        }}
+      >
         {[
           ["all", "All"],
-          ["placement", "Placements"],
-          ["notice", "Notices"],
-          ["event", "Events"],
-          ["advisory", "Advisories"],
+          ["placement", "Placement"],
+          ["notice", "Notice"],
+          ["event", "Event"],
+          ["advisory", "Advisory"],
         ].map(([key, label]) => {
           const active = filter === key;
           return (
-            <Chip
+            <Box
               key={key}
-              label={label}
-              size="small"
+              component="button"
+              type="button"
               onClick={() => setFilter(key)}
               sx={{
-                fontSize: "0.7rem",
+                flex: 1,
+                py: 0.5,
+                px: 0.8,
+                textAlign: "center",
+                borderRadius: 1.5,
+                fontSize: "0.72rem",
                 fontWeight: active ? 700 : 500,
                 cursor: "pointer",
-                bgcolor: active ? "primary.main" : "action.hover",
-                color: active ? "primary.contrastText" : "text.secondary",
-                "&:hover": { bgcolor: active ? "primary.dark" : "action.selected" },
+                whiteSpace: "nowrap",
+                border: "none",
+                bgcolor: active ? "background.paper" : "transparent",
+                color: active ? "text.primary" : "text.secondary",
+                boxShadow: active
+                  ? theme.palette.mode === "light"
+                    ? "0 1px 3px rgba(0,0,0,0.06)"
+                    : "0 1px 3px rgba(0,0,0,0.4)"
+                  : "none",
+                transition: "all 140ms ease",
               }}
-            />
+            >
+              {label}
+            </Box>
           );
         })}
-      </Stack>
+      </Box>
 
       {/* ---------------- Announcement List ---------------- */}
       {loading ? (

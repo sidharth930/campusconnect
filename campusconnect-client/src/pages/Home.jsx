@@ -151,180 +151,218 @@ export default function Home() {
           <Box
             bgcolor="background.paper"
             border={`1px solid ${theme.palette.divider}`}
-            borderRadius={3.5}
+            borderRadius={3}
             p={2.5}
             sx={{
               boxShadow:
                 theme.palette.mode === "light"
-                  ? "0 4px 20px -6px rgba(15, 23, 42, 0.06)"
-                  : "0 8px 28px -10px rgba(0, 0, 0, 0.7)",
-              animation: "fadeSlideUp 400ms ease-out both",
+                  ? "0 1px 3px 0 rgba(0, 0, 0, 0.02), 0 4px 16px -2px rgba(15, 23, 42, 0.05)"
+                  : "0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 8px 24px -6px rgba(0, 0, 0, 0.55), inset 0 1px 0 0 rgba(255, 255, 255, 0.04)",
+              transition: "border-color 160ms ease, box-shadow 160ms ease",
+              "&:focus-within": {
+                borderColor: theme.palette.mode === "light" ? "primary.main" : "rgba(255, 255, 255, 0.16)",
+              },
             }}
           >
-            <Box display="flex" gap={1.5}>
+            <Box display="flex" gap={1.8}>
               <ClickableAvatar
                 user={authUser}
-                size={44}
+                size={42}
                 sx={{
                   border: `2px solid ${roleColor}`,
                   boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+                  flexShrink: 0,
+                  mt: 0.5,
                 }}
               />
-              <InputBase
-                placeholder="Share a thought, ask a doubt, or drop study resources…"
-                fullWidth
-                multiline
-                minRows={2}
-                value={text}
-                onChange={(e) => setText(e.target.value)}
-                sx={{
-                  bgcolor: theme.palette.mode === "light" ? "#F1F5F9" : "rgba(255, 255, 255, 0.05)",
-                  border: `1px solid ${theme.palette.divider}`,
-                  borderRadius: 3,
-                  px: 2,
-                  py: 1.2,
-                  fontSize: "0.95rem",
-                  transition: "border-color 160ms, box-shadow 160ms",
-                  "&:focus-within": {
-                    borderColor: "primary.main",
-                    boxShadow: "0 0 0 3px rgba(99, 102, 241, 0.15)",
-                  },
-                }}
-              />
-            </Box>
+              <Box flex={1} minWidth={0}>
+                <InputBase
+                  placeholder="Share an insight, ask a doubt, or drop study resources…"
+                  fullWidth
+                  multiline
+                  minRows={2}
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
+                  sx={{
+                    p: 0,
+                    fontSize: "0.96rem",
+                    lineHeight: 1.6,
+                    color: "text.primary",
+                    "& textarea::placeholder": {
+                      color: "text.secondary",
+                      opacity: 0.7,
+                    },
+                  }}
+                />
 
-            {media && (
-              <Box position="relative" mt={2} borderRadius={3} overflow="hidden" border={`1px solid ${theme.palette.divider}`}>
-                {media.mediaType === "video" ? (
-                  <video src={media.url} controls style={{ width: "100%", maxHeight: 280, background: "#000" }} />
-                ) : media.mediaType === "image" ? (
-                  <img src={media.url} alt="attachment" style={{ width: "100%", maxHeight: 280, objectFit: "cover" }} />
-                ) : (
-                  <Box p={2} bgcolor="action.hover">
-                    <Typography variant="body2">Attachment ready — {media.mediaType}</Typography>
+                {media && (
+                  <Box position="relative" mt={2} borderRadius={2.5} overflow="hidden" border={`1px solid ${theme.palette.divider}`}>
+                    {media.mediaType === "video" ? (
+                      <video src={media.url} controls style={{ width: "100%", maxHeight: 280, background: "#000" }} />
+                    ) : media.mediaType === "image" ? (
+                      <img src={media.url} alt="attachment" style={{ width: "100%", maxHeight: 280, objectFit: "cover" }} />
+                    ) : (
+                      <Box p={2} bgcolor="action.hover">
+                        <Typography variant="body2">Attachment ready — {media.mediaType}</Typography>
+                      </Box>
+                    )}
+                    <IconButton size="small" onClick={() => setMedia(null)} sx={{ position: "absolute", top: 8, right: 8, bgcolor: "rgba(0,0,0,0.75)", color: "#fff", "&:hover": { bgcolor: "rgba(0,0,0,0.9)" } }}>
+                      <Close sx={{ fontSize: 16 }} />
+                    </IconButton>
                   </Box>
                 )}
-                <IconButton size="small" onClick={() => setMedia(null)} sx={{ position: "absolute", top: 8, right: 8, bgcolor: "rgba(0,0,0,0.7)", color: "#fff" }}>
-                  <Close fontSize="small" />
-                </IconButton>
+
+                {/* Category selector row */}
+                <Box display="flex" gap={0.8} flexWrap="wrap" mt={2} pt={1.8} borderTop={`1px solid ${theme.palette.divider}`} alignItems="center">
+                  <Typography variant="caption" color="text.secondary" fontWeight={600} mr={0.5} fontSize="0.75rem">
+                    Post as:
+                  </Typography>
+                  {options.map(({ key, label, Icon: CatIcon }) => {
+                    const active = postType === key;
+                    return (
+                      <Box
+                        key={key}
+                        component="button"
+                        type="button"
+                        onClick={() => setPostType(key)}
+                        sx={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: 0.6,
+                          px: 1.2,
+                          py: 0.45,
+                          borderRadius: 1.5,
+                          fontSize: "0.76rem",
+                          fontWeight: active ? 700 : 500,
+                          cursor: "pointer",
+                          border: "1px solid",
+                          borderColor: active ? "primary.main" : theme.palette.divider,
+                          bgcolor: active ? "primary.main" : "action.hover",
+                          color: active ? "#fff" : "text.secondary",
+                          transition: "all 140ms ease",
+                          "&:hover": {
+                            borderColor: active ? "primary.main" : "text.secondary",
+                            color: active ? "#fff" : "text.primary",
+                          },
+                        }}
+                      >
+                        {CatIcon && <CatIcon sx={{ fontSize: 13, color: active ? "#fff" : "inherit" }} />}
+                        {label}
+                      </Box>
+                    );
+                  })}
+                </Box>
+
+                {/* Toolbar: Attachments + Submit */}
+                <Box display="flex" justifyContent="space-between" alignItems="center" mt={2} pt={1.2} borderTop={`1px solid ${theme.palette.divider}`} flexWrap="wrap" gap={1.5}>
+                  <Box display="flex" gap={0.5} alignItems="center">
+                    {UPLOAD_BUTTONS.map(({ key, label, Icon, color }) => (
+                      <Tooltip key={key} title={label}>
+                        <IconButton
+                          size="small"
+                          onClick={() => setActiveUpload(key)}
+                          sx={{
+                            width: 32,
+                            height: 32,
+                            color: "text.secondary",
+                            borderRadius: 1.5,
+                            "&:hover": {
+                              color,
+                              bgcolor: `${color}14`,
+                            },
+                          }}
+                        >
+                          <Icon sx={{ fontSize: 18 }} />
+                        </IconButton>
+                      </Tooltip>
+                    ))}
+                  </Box>
+
+                  <Button
+                    variant="contained"
+                    disabled={posting || (!text.trim() && !media)}
+                    onClick={handlePost}
+                    endIcon={<Send sx={{ fontSize: 15 }} />}
+                    sx={{
+                      px: 2.8,
+                      py: 0.75,
+                      borderRadius: 2,
+                      fontWeight: 700,
+                      fontSize: "0.85rem",
+                      letterSpacing: "-0.01em",
+                    }}
+                  >
+                    Publish
+                  </Button>
+                </Box>
               </Box>
-            )}
-
-            <Box display="flex" justifyContent="space-between" alignItems="center" mt={2} flexWrap="wrap" gap={1.5}>
-              <Box display="flex" gap={1}>
-                {UPLOAD_BUTTONS.map(({ key, label, Icon, color }) => (
-                  <Tooltip key={key} title={label}>
-                    <IconButton
-                      size="small"
-                      onClick={() => setActiveUpload(key)}
-                      sx={{
-                        bgcolor: `${color}14`,
-                        color,
-                        "&:hover": { bgcolor: `${color}28` },
-                      }}
-                    >
-                      <Icon fontSize="small" />
-                    </IconButton>
-                  </Tooltip>
-                ))}
-              </Box>
-
-              <Button
-                variant="contained"
-                disabled={posting || (!text.trim() && !media)}
-                onClick={handlePost}
-                endIcon={<Send fontSize="small" />}
-                sx={{
-                  background: "linear-gradient(135deg, #4F46E5, #06B6D4)",
-                  fontWeight: 700,
-                  px: 3,
-                  py: 0.9,
-                  borderRadius: 2.5,
-                  "&:hover": {
-                    background: "linear-gradient(135deg, #4338CA, #0891B2)",
-                    transform: "translateY(-1px)",
-                  },
-                }}
-              >
-                Post
-              </Button>
-            </Box>
-
-            {/* Category pills */}
-            <Box display="flex" gap={1} flexWrap="wrap" mt={2} pt={1.5} borderTop={`1px solid ${theme.palette.divider}`}>
-              <Typography variant="caption" color="text.secondary" fontWeight={700} alignSelf="center" mr={0.5}>
-                Category:
-              </Typography>
-              {options.map(({ key, label, Icon: CatIcon }) => {
-                const active = postType === key;
-                return (
-                  <Chip
-                    key={key}
-                    icon={CatIcon ? <CatIcon sx={{ fontSize: "15px !important", color: active ? "#fff !important" : "inherit" }} /> : undefined}
-                    label={label}
-                    size="small"
-                    onClick={() => setPostType(key)}
-                    sx={
-                      active
-                        ? {
-                            bgcolor: "primary.main",
-                            color: "#fff",
-                            fontWeight: 700,
-                            boxShadow: "0 2px 10px -2px rgba(99, 102, 241, 0.5)",
-                            "& .MuiChip-icon": { ml: "7px", mr: "-2px" },
-                          }
-                        : {
-                            bgcolor: "action.hover",
-                            color: "text.primary",
-                            border: `1px solid ${theme.palette.divider}`,
-                            "&:hover": { bgcolor: "action.selected" },
-                            "& .MuiChip-icon": { ml: "7px", mr: "-2px" },
-                          }
-                    }
-                  />
-                );
-              })}
             </Box>
           </Box>
 
-          {/* Filter Bar with Category Pills */}
+          {/* Sleek Linear-style Feed Segmented Bar */}
           <Box
-            display="flex"
-            alignItems="center"
-            gap={1}
-            flexWrap="wrap"
-            px={0.5}
-            sx={{ animation: "fadeSlideUp 400ms ease-out 80ms both" }}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 0.5,
+              p: 0.5,
+              bgcolor: theme.palette.mode === "light" ? "rgba(241, 245, 249, 0.8)" : "rgba(255, 255, 255, 0.03)",
+              borderRadius: 2.5,
+              border: `1px solid ${theme.palette.divider}`,
+              overflowX: "auto",
+              scrollbarWidth: "none",
+              "&::-webkit-scrollbar": { display: "none" },
+            }}
           >
-            <FilterList fontSize="small" sx={{ color: "text.secondary", mr: 0.5 }} />
             {ALL_FILTER_OPTIONS.map(({ key, label, color, Icon: FilterIcon }) => {
               const active = feedFilter === key;
               return (
-                <Chip
+                <Box
                   key={key}
-                  icon={FilterIcon ? <FilterIcon sx={{ fontSize: "15px !important", color: active ? `${color} !important` : `${color}cc !important` }} /> : undefined}
-                  label={label}
-                  size="small"
+                  component="button"
+                  type="button"
                   onClick={() => setFeedFilter(key)}
-                  sx={
-                    active
-                      ? {
-                          bgcolor: `${color}1A`,
-                          color,
-                          fontWeight: 700,
-                          border: `1.5px solid ${color}`,
-                          boxShadow: `0 2px 12px -3px ${color}55`,
-                          "& .MuiChip-icon": { ml: "7px", mr: "-2px" },
-                        }
-                      : {
-                          bgcolor: "background.paper",
-                          color: "text.secondary",
-                          border: `1px solid ${theme.palette.divider}`,
-                          "&:hover": { bgcolor: "action.hover", color: "text.primary" },
-                          "& .MuiChip-icon": { ml: "7px", mr: "-2px" },
-                        }
-                  }
-                />
+                  sx={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 0.8,
+                    px: 1.8,
+                    py: 0.8,
+                    borderRadius: 2,
+                    fontSize: "0.82rem",
+                    fontWeight: active ? 700 : 500,
+                    cursor: "pointer",
+                    whiteSpace: "nowrap",
+                    border: "none",
+                    bgcolor: active ? "background.paper" : "transparent",
+                    color: active ? "text.primary" : "text.secondary",
+                    boxShadow: active
+                      ? theme.palette.mode === "light"
+                        ? "0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04)"
+                        : "0 1px 3px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06)"
+                      : "none",
+                    transition: "all 140ms cubic-bezier(0.4, 0, 0.2, 1)",
+                    "&:hover": {
+                      color: "text.primary",
+                      bgcolor: active
+                        ? "background.paper"
+                        : theme.palette.mode === "light"
+                        ? "rgba(255,255,255,0.6)"
+                        : "rgba(255,255,255,0.06)",
+                    },
+                  }}
+                >
+                  {FilterIcon && (
+                    <FilterIcon
+                      sx={{
+                        fontSize: 15,
+                        color: active ? `${color} !important` : "text.secondary",
+                        transition: "color 140ms ease",
+                      }}
+                    />
+                  )}
+                  {label}
+                </Box>
               );
             })}
           </Box>

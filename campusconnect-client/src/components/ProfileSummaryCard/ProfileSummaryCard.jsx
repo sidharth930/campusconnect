@@ -112,21 +112,30 @@ export default function ProfileSummaryCard({ profile, friendsCount, editable, on
       {/* Academic Credential & Trust Tier */}
       <AcademicBadges profile={profile} friendsCount={friendsCount} />
 
-      <Divider sx={{ my: 2 }} />
+      <Box display="grid" gridTemplateColumns="1fr 1fr" gap={1} my={2}>
+        <Box p={1.4} bgcolor="action.hover" borderRadius={2} border={`1px solid ${theme.palette.divider}`}>
+          <Box display="flex" alignItems="center" gap={0.6} mb={0.4}>
+            <Visibility sx={{ fontSize: 14, color: "text.secondary" }} />
+            <Typography variant="caption" color="text.secondary" fontSize="0.72rem" fontWeight={600}>
+              Views
+            </Typography>
+          </Box>
+          <Typography variant="h6" fontWeight={800} fontSize="1.1rem" lineHeight={1}>
+            {profile.viewedProfile ?? 0}
+          </Typography>
+        </Box>
 
-      <Box display="flex" alignItems="center" justifyContent="space-between" mb={1}>
-        <Box display="flex" alignItems="center" gap={1}>
-          <Visibility fontSize="small" sx={{ color: "text.secondary" }} />
-          <Typography variant="body2" color="text.secondary">Who's viewed your profile</Typography>
+        <Box p={1.4} bgcolor="action.hover" borderRadius={2} border={`1px solid ${theme.palette.divider}`}>
+          <Box display="flex" alignItems="center" gap={0.6} mb={0.4}>
+            <TrendingUp sx={{ fontSize: 14, color: "text.secondary" }} />
+            <Typography variant="caption" color="text.secondary" fontSize="0.72rem" fontWeight={600}>
+              Impressions
+            </Typography>
+          </Box>
+          <Typography variant="h6" fontWeight={800} fontSize="1.1rem" lineHeight={1}>
+            {profile.impressions ?? 0}
+          </Typography>
         </Box>
-        <Typography fontWeight={700}>{profile.viewedProfile ?? 0}</Typography>
-      </Box>
-      <Box display="flex" alignItems="center" justifyContent="space-between">
-        <Box display="flex" alignItems="center" gap={1}>
-          <TrendingUp fontSize="small" sx={{ color: "text.secondary" }} />
-          <Typography variant="body2" color="text.secondary">Impressions of your posts</Typography>
-        </Box>
-        <Typography fontWeight={700}>{profile.impressions ?? 0}</Typography>
       </Box>
 
       <Divider sx={{ my: 2 }} />
