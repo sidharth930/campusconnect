@@ -5,6 +5,8 @@ import {
 } from "@mui/material";
 import {
   Image as ImageIcon, Videocam, AttachFile, Mic, Close, Send, Forum, FilterList,
+  AutoAwesome, LightbulbOutlined, MenuBookOutlined, HelpOutlineOutlined,
+  RocketLaunchOutlined, SchoolOutlined, ExploreOutlined, WorkOutline,
 } from "@mui/icons-material";
 import Navbar from "../components/Navbar/Navbar";
 import PostCard from "../components/PostCard/PostCard";
@@ -23,18 +25,35 @@ import { getErrorMessage } from "../services/api";
 import { ROLE_COLORS } from "../theme";
 
 const ROLE_POST_TYPES = {
-  student: [["general", "💡 Thought"], ["resource", "📚 Resource"], ["doubt", "❓ Doubt"], ["project", "🚀 Project"], ["placement", "🎓 Placement"]],
-  alumni: [["general", "💡 Thought"], ["advice", "🧭 Advice"], ["job", "💼 Job"], ["resource", "📚 Resource"], ["placement", "🎓 Placement"]],
-  developer: [["general", "💡 Thought"], ["project", "🚀 Project"], ["resource", "📚 Resource"], ["doubt", "❓ Doubt"]],
+  student: [
+    { key: "general", label: "Thought", Icon: LightbulbOutlined },
+    { key: "resource", label: "Resource", Icon: MenuBookOutlined },
+    { key: "doubt", label: "Doubt", Icon: HelpOutlineOutlined },
+    { key: "project", label: "Project", Icon: RocketLaunchOutlined },
+    { key: "placement", label: "Placement", Icon: SchoolOutlined },
+  ],
+  alumni: [
+    { key: "general", label: "Thought", Icon: LightbulbOutlined },
+    { key: "advice", label: "Advice", Icon: ExploreOutlined },
+    { key: "job", label: "Job", Icon: WorkOutline },
+    { key: "resource", label: "Resource", Icon: MenuBookOutlined },
+    { key: "placement", label: "Placement", Icon: SchoolOutlined },
+  ],
+  developer: [
+    { key: "general", label: "Thought", Icon: LightbulbOutlined },
+    { key: "project", label: "Project", Icon: RocketLaunchOutlined },
+    { key: "resource", label: "Resource", Icon: MenuBookOutlined },
+    { key: "doubt", label: "Doubt", Icon: HelpOutlineOutlined },
+  ],
 };
 
 const ALL_FILTER_OPTIONS = [
-  ["all", "✨ All", "#6366F1"],
-  ["general", "💡 Thoughts", "#6366F1"],
-  ["resource", "📚 Resources", "#06B6D4"],
-  ["doubt", "❓ Doubts", "#F43F5E"],
-  ["project", "🚀 Projects", "#10B981"],
-  ["placement", "🎓 Placements", "#F59E0B"],
+  { key: "all", label: "All", color: "#6366F1", Icon: AutoAwesome },
+  { key: "general", label: "Thoughts", color: "#6366F1", Icon: LightbulbOutlined },
+  { key: "resource", label: "Resources", color: "#06B6D4", Icon: MenuBookOutlined },
+  { key: "doubt", label: "Doubts", color: "#F43F5E", Icon: HelpOutlineOutlined },
+  { key: "project", label: "Projects", color: "#10B981", Icon: RocketLaunchOutlined },
+  { key: "placement", label: "Placements", color: "#F59E0B", Icon: SchoolOutlined },
 ];
 
 const UPLOAD_BUTTONS = [
@@ -236,11 +255,12 @@ export default function Home() {
               <Typography variant="caption" color="text.secondary" fontWeight={700} alignSelf="center" mr={0.5}>
                 Category:
               </Typography>
-              {options.map(([key, label]) => {
+              {options.map(({ key, label, Icon: CatIcon }) => {
                 const active = postType === key;
                 return (
                   <Chip
                     key={key}
+                    icon={CatIcon ? <CatIcon sx={{ fontSize: "15px !important", color: active ? "#fff !important" : "inherit" }} /> : undefined}
                     label={label}
                     size="small"
                     onClick={() => setPostType(key)}
@@ -251,12 +271,14 @@ export default function Home() {
                             color: "#fff",
                             fontWeight: 700,
                             boxShadow: "0 2px 10px -2px rgba(99, 102, 241, 0.5)",
+                            "& .MuiChip-icon": { ml: "7px", mr: "-2px" },
                           }
                         : {
                             bgcolor: "action.hover",
                             color: "text.primary",
                             border: `1px solid ${theme.palette.divider}`,
                             "&:hover": { bgcolor: "action.selected" },
+                            "& .MuiChip-icon": { ml: "7px", mr: "-2px" },
                           }
                     }
                   />
@@ -275,11 +297,12 @@ export default function Home() {
             sx={{ animation: "fadeSlideUp 400ms ease-out 80ms both" }}
           >
             <FilterList fontSize="small" sx={{ color: "text.secondary", mr: 0.5 }} />
-            {ALL_FILTER_OPTIONS.map(([key, label, color]) => {
+            {ALL_FILTER_OPTIONS.map(({ key, label, color, Icon: FilterIcon }) => {
               const active = feedFilter === key;
               return (
                 <Chip
                   key={key}
+                  icon={FilterIcon ? <FilterIcon sx={{ fontSize: "15px !important", color: active ? `${color} !important` : `${color}cc !important` }} /> : undefined}
                   label={label}
                   size="small"
                   onClick={() => setFeedFilter(key)}
@@ -291,12 +314,14 @@ export default function Home() {
                           fontWeight: 700,
                           border: `1.5px solid ${color}`,
                           boxShadow: `0 2px 12px -3px ${color}55`,
+                          "& .MuiChip-icon": { ml: "7px", mr: "-2px" },
                         }
                       : {
                           bgcolor: "background.paper",
                           color: "text.secondary",
                           border: `1px solid ${theme.palette.divider}`,
                           "&:hover": { bgcolor: "action.hover", color: "text.primary" },
+                          "& .MuiChip-icon": { ml: "7px", mr: "-2px" },
                         }
                   }
                 />

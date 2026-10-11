@@ -186,18 +186,28 @@ export default function PostCard({ post }) {
 
           <Box display="flex" alignItems="center" gap={1}>
             {/* Category Pill */}
-            <Chip
-              label={`${typeConfig.icon} ${typeConfig.label}`}
-              size="small"
-              sx={{
-                bgcolor: typeConfig.bg,
-                color: badgeColor,
-                fontWeight: 700,
-                fontSize: "0.75rem",
-                height: 26,
-                border: `1px solid ${typeConfig.border}`,
-              }}
-            />
+            {(() => {
+              const TypeIcon = typeConfig.Icon;
+              return (
+                <Chip
+                  icon={TypeIcon ? <TypeIcon sx={{ fontSize: "14px !important", color: `${badgeColor} !important` }} /> : undefined}
+                  label={typeConfig.label}
+                  size="small"
+                  sx={{
+                    bgcolor: typeConfig.bg,
+                    color: badgeColor,
+                    fontWeight: 700,
+                    fontSize: "0.75rem",
+                    height: 26,
+                    border: `1px solid ${typeConfig.border}`,
+                    "& .MuiChip-icon": {
+                      ml: "6px",
+                      mr: "-2px",
+                    },
+                  }}
+                />
+              );
+            })()}
 
             {!isMe && (
               <Tooltip title={isConnected ? "Remove connection" : "Connect with peer"}>

@@ -1,3 +1,13 @@
+import {
+  LightbulbOutlined,
+  MenuBookOutlined,
+  HelpOutlineOutlined,
+  RocketLaunchOutlined,
+  SchoolOutlined,
+  ExploreOutlined,
+  WorkOutline,
+} from "@mui/icons-material";
+
 export const BRAND = "#6366F1"; // Vibrant Electric Indigo
 export const ROLE_COLORS = {
   student: "#10B981",    // Crisp Emerald
@@ -9,49 +19,49 @@ export const GOLD = "#F59E0B";
 export const POST_TYPE_CONFIG = {
   general: {
     label: "Thought",
-    icon: "💡",
+    Icon: LightbulbOutlined,
     color: "#6366F1",
     bg: "rgba(99, 102, 241, 0.12)",
     border: "rgba(99, 102, 241, 0.28)",
   },
   resource: {
     label: "Resource",
-    icon: "📚",
+    Icon: MenuBookOutlined,
     color: "#06B6D4",
     bg: "rgba(6, 182, 212, 0.12)",
     border: "rgba(6, 182, 212, 0.28)",
   },
   doubt: {
     label: "Doubt",
-    icon: "❓",
+    Icon: HelpOutlineOutlined,
     color: "#F43F5E",
     bg: "rgba(244, 63, 94, 0.12)",
     border: "rgba(244, 63, 94, 0.28)",
   },
   project: {
     label: "Project",
-    icon: "🚀",
+    Icon: RocketLaunchOutlined,
     color: "#10B981",
     bg: "rgba(16, 185, 129, 0.12)",
     border: "rgba(16, 185, 129, 0.28)",
   },
   placement: {
     label: "Placement",
-    icon: "🎓",
+    Icon: SchoolOutlined,
     color: "#F59E0B",
     bg: "rgba(245, 158, 11, 0.14)",
     border: "rgba(245, 158, 11, 0.35)",
   },
   advice: {
     label: "Advice",
-    icon: "🧭",
+    Icon: ExploreOutlined,
     color: "#14B8A6",
     bg: "rgba(20, 184, 166, 0.12)",
     border: "rgba(20, 184, 166, 0.28)",
   },
   job: {
     label: "Job",
-    icon: "💼",
+    Icon: WorkOutline,
     color: "#3B82F6",
     bg: "rgba(59, 130, 246, 0.12)",
     border: "rgba(59, 130, 246, 0.28)",

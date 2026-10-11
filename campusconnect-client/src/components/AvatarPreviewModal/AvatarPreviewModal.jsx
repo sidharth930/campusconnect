@@ -26,6 +26,7 @@ import {
   VerifiedUser,
   Place,
   Work,
+  CheckCircleOutline,
 } from "@mui/icons-material";
 import { closeAvatarModal, updateAvatarModalUser, showError } from "../../redux/uiSlice";
 import { updateAuthUser } from "../../redux/authSlice";
@@ -284,17 +285,20 @@ export default function AvatarPreviewModal() {
             <Typography
               variant="caption"
               sx={{
-                display: "inline-block",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 0.6,
                 bgcolor: "success.main",
                 color: "#FFF",
-                px: 2,
+                px: 1.8,
                 py: 0.5,
                 borderRadius: 2,
                 fontWeight: 600,
                 my: 1,
               }}
             >
-              ✓ {successMsg}
+              <CheckCircleOutline sx={{ fontSize: "14px !important" }} />
+              {successMsg}
             </Typography>
           </Fade>
         )}

@@ -4,7 +4,7 @@ import {
   Drawer, Box, Typography, IconButton, Avatar, InputBase, List, ListItemButton,
   ListItemAvatar, ListItemText, Divider, Chip,
 } from "@mui/material";
-import { Close, ArrowBack, Send } from "@mui/icons-material";
+import { Close, ArrowBack, Send, WavingHandOutlined } from "@mui/icons-material";
 import { getFriends } from "../../services/userService";
 import { getConversation } from "../../services/messageService";
 import { getSocket } from "../../socket/socket";
@@ -129,9 +129,12 @@ export default function ChatDrawer({ open, onClose, initialFriend = null }) {
               );
             })}
             {messages.length === 0 && (
-              <Typography variant="body2" color="text.secondary" textAlign="center" mt={4}>
-                Say hello to {activeFriend.firstName} 👋
-              </Typography>
+              <Box display="flex" alignItems="center" justifyContent="center" gap={0.8} mt={4}>
+                <WavingHandOutlined sx={{ fontSize: "1.1rem", color: "primary.main" }} />
+                <Typography variant="body2" color="text.secondary">
+                  Say hello to {activeFriend.firstName}
+                </Typography>
+              </Box>
             )}
           </Box>
           <Divider />

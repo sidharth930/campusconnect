@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box, Avatar, Typography, Chip, Divider, IconButton, Tooltip, Skeleton, useTheme } from "@mui/material";
-import { GitHub, LinkedIn, Language, Edit, Visibility, TrendingUp, PhotoCamera } from "@mui/icons-material";
+import { GitHub, LinkedIn, Language, Edit, Visibility, TrendingUp, PhotoCamera, LocationOnOutlined } from "@mui/icons-material";
 import EditSocialLinksModal from "../EditSocialLinksModal/EditSocialLinksModal";
 import ClickableAvatar from "../ClickableAvatar/ClickableAvatar";
 import VerifiedBadge from "../VerifiedBadge/VerifiedBadge";
@@ -101,9 +101,12 @@ export default function ProfileSummaryCard({ profile, friendsCount, editable, on
         )}
       </Box>
       {profile.location && (
-        <Typography variant="body2" color="text.secondary" mt={0.8} fontSize="0.82rem">
-          📍 {profile.location}
-        </Typography>
+        <Box display="flex" alignItems="center" gap={0.6} mt={0.8}>
+          <LocationOnOutlined sx={{ fontSize: "0.95rem", color: "text.secondary" }} />
+          <Typography variant="body2" color="text.secondary" fontSize="0.82rem">
+            {profile.location}
+          </Typography>
+        </Box>
       )}
 
       {/* Academic Credential & Trust Tier */}
