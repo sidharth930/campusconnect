@@ -7,6 +7,7 @@ const http = require("http");
 const path = require("path");
 const { Server } = require("socket.io");
 
+const mongoose = require("mongoose");
 const connectDB = require("./config/db");
 const { connectRedis } = require("./config/redis");
 const initSocketServer = require("./socket/socketServer");
@@ -72,7 +73,18 @@ app.use("/api/messages", messageRoutes);
 app.use("/api/media", mediaRoutes);
 app.use("/api/announcements", announcementRoutes);
 
-app.get("/api/health", (req, res) => res.json({ status: "ok", service: "CampusConnect API" }));
+app.get("/api/health", (req, res) => {
+  const states = ["disconnected", "connected", "connecting", "disconnecting"];
+  res.json({
+    status: "ok",
+    service: "CampusConnect API",
+    dbState: states[mongoose.connection.readyState] || "unknown",
+    hasMongoUri: Boolean(process.env.MONGO_URI),
+    hasJwtSecret: Boolean(process.env.JWT_SECRET),
+    hasRedisUrl: Boolean(process.env.REDIS_URL),
+    configuredOrigins,
+  });
+});
 
 app.use(notFound);
 app.use(errorHandler);
